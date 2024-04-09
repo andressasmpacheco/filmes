@@ -1,23 +1,17 @@
 import {Container, MovieList, Movie} from '../../../src/pages/Home/styles.jsx'
+import {useState, useEffect} from 'react'
+import {apikey} from '../../../src/config/key.jsx'
 
 function Home() {
-  const movies = [
-        {
-              title: "Homem-aranha",
-              id: 1,
-              imageurl: "https://image.api.playstation.com/vulcan/ap/rnd/202306/1219/60eca3ac155247e21850c7d075d01ebf0f3f5dbf19ccd2a1.jpg"
-        },
-        {
-          title: "Homem-aranha",
-          id: 2,
-          imageurl: "https://image.api.playstation.com/vulcan/ap/rnd/202306/1219/60eca3ac155247e21850c7d075d01ebf0f3f5dbf19ccd2a1.jpg"
-        },
-        {
-          title: "Homem-aranha",
-          id: 3,
-          imageurl: "https://image.api.playstation.com/vulcan/ap/rnd/202306/1219/60eca3ac155247e21850c7d075d01ebf0f3f5dbf19ccd2a1.jpg"
-        }
-      ]
+const [movies, setMovies] = useState([])
+const image_path = 'https://image.tmdb.org/t/p/w500'
+
+useEffect(() =>{
+  fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=1`)
+  .then(response => response.json())
+  .then(data => setMovies(data.results))
+
+},[])
 
     return (
       <>
@@ -25,21 +19,17 @@ function Home() {
      <Container> 
         <h1>Movies</h1>
         <MovieList>
-            <Movie>
-                <a href="www.google.com.br"><img src= 'https://image.api.playstation.com/vulcan/ap/rnd/202306/1219/60eca3ac155247e21850c7d075d01ebf0f3f5dbf19ccd2a1.jpg' alt="spider-man"></img></a>
-                <span>Homem-aranha</span>
-            </Movie>
-                
-            <Movie>     
-            <a href="www.google.com.br"><img src= 'https://image.api.playstation.com/vulcan/ap/rnd/202306/1219/60eca3ac155247e21850c7d075d01ebf0f3f5dbf19ccd2a1.jpg' alt="spider-man"></img></a>
-            <span>Homem-aranha</span>
-                
-            </Movie>
 
-            <Movie>
-               <a href="www.google.com.br"><img src= 'https://image.api.playstation.com/vulcan/ap/rnd/202306/1219/60eca3ac155247e21850c7d075d01ebf0f3f5dbf19ccd2a1.jpg' alt="spider-man"></img></a>
-                <span>Homem-aranha</span>
-            </Movie>
+          {
+            movies.map(movie=>{
+              return(
+                <Movie key={movie.id}>
+                  <a href='www.google.com.br'><img src={`${image_path}${movie.poster_path}`}alt={movie.title}></img></a>
+                  <span>{movie.title}</span>
+                </Movie>
+              )
+            })
+          }
         </MovieList>
         </Container>
   
