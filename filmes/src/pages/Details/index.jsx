@@ -1,7 +1,9 @@
-import {useParams} from 'react-router-dom'
+import {Link, useParams} from 'react-router-dom'
 import {useState, useEffect} from 'react'
-import {apikey} from '../src/config/key.jsx'
-import {Container} from '../src/pages/details/styles.jsx'
+import {apikey} from '../../config/key.jsx'
+
+import {Container} from '../Details/styles.jsx'
+
 
 function Details(){
 const image_path = 'https://image.tmdb.org/t/p/w500'
@@ -27,13 +29,14 @@ useEffect(()=>{
     return(
         <Container>
 
-            <div classname='movie'>
-                <img src={movie.image} alt={movie.title}></img>
-                <div classname='details'>
+            <div>
+                <img  src={movie.image} alt={movie.title}></img>
+                <div className='details'>
                     <h1>{movie.title}</h1>
                     <span>Sinopse: {movie.sinopse}</span>
                     <span>Data lançamento: {movie.releasedate}</span>
-                    <button>Voltar</button>
+                    <Link to={'/'}> <button>Voltar</button></Link>
+                  
                 </div>
             </div>
         </Container>
